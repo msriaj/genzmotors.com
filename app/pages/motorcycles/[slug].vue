@@ -28,8 +28,8 @@ const site = useSiteConfig()
 const canonical = computed(() => `${site.url}/motorcycles/${model.slug}`)
 
 useSeoMeta({
-  title: `${model.name} in Bangladesh | Gen-Z Motors, Authorized GPX Dealer`,
-  description: `${model.name} at Gen-Z Motors, the authorized GPX dealer with showrooms in Uttara, Dhaka and Mymensingh. ${model.colourways.length} factory colourways, full specifications, and test rides by appointment.`,
+  title: `${model.shortName} Bangladesh | Gen-Z Motors GPX Dealer`,
+  description: `${model.name}: ${model.engineCc}, ${model.power}, ${model.colourways.length} factory colourways. See it and ride it at the Gen-Z Motors showrooms in Uttara and Mymensingh.`,
   ogTitle: `${model.name} — Gen-Z Motors Uttara`,
   ogDescription: model.tagline,
   ogType: 'website',

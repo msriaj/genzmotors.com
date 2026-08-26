@@ -14,6 +14,9 @@ importers:
       '@nuxtjs/seo':
         specifier: ^5.3.14
         version: 5.3.14(af50a112065a013bbfc7f9fee983890c)
+      '@takumi-rs/core':
+        specifier: ^2.12.0
+        version: 2.12.0(csstype@3.2.3)
       gsap:
         specifier: ^3.15.0
         version: 3.15.0
@@ -36,9 +39,6 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.2.2(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
-      '@takumi-rs/core':
-        specifier: ^2.12.0
-        version: 2.12.0(csstype@3.2.3)
       '@types/three':
         specifier: ^0.185.0
         version: 0.185.4

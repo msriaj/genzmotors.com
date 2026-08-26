@@ -12,9 +12,9 @@ const counts = computed(() =>
 )
 
 useSeoMeta({
-  title: 'Helmets & Riding Gear | MT, TORQ & ORIGINE at Gen-Z Motors',
+  title: 'MT, TORQ & ORIGINE Helmets | Gen-Z Motors Uttara',
   description:
-    'MT, TORQ and ORIGINE helmets stocked at the Gen-Z Motors GPX showrooms in Uttara, Dhaka and Mymensingh. Try them on in person alongside the GPX Demon lineup.',
+    'MT, TORQ and ORIGINE helmets on the counter at the Gen-Z Motors GPX showrooms in Uttara and Mymensingh. Try the fit in person before you buy.',
   ogTitle: 'Helmets & gear — Gen-Z Motors',
   ogDescription: 'MT, TORQ and ORIGINE helmets at both showrooms.',
 })

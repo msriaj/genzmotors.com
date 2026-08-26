@@ -2,9 +2,9 @@
 import { dealer, telLink, whatsappLink } from '~/data/dealer'
 
 useSeoMeta({
-  title: 'GPX Service & Spare Parts | Gen-Z Motors, Uttara & Mymensingh',
+  title: 'GPX Service Centre & Spare Parts | Uttara, Dhaka',
   description:
-    'Authorized GPX servicing, warranty work and genuine spare parts at Gen-Z Motors. The Uttara 3S centre in Sector 15, Diabari handles service and parts, with support for Mymensingh customers. Four free services and a two-year or 20,000 km engine warranty on new GPX motorcycles.',
+    'Authorized GPX servicing, warranty work and genuine spare parts at the Gen-Z Motors 3S centre in Uttara, with support for Mymensingh riders.',
   ogTitle: 'GPX Service & Support — Uttara, Dhaka',
   ogDescription: 'Authorized 3S centre: servicing, warranty and genuine GPX spare parts.',
 })

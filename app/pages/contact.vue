@@ -33,9 +33,9 @@ const topics = [
 ]
 
 useSeoMeta({
-  title: 'Contact Gen-Z Motors | GPX Dealer, Uttara & Mymensingh',
+  title: 'Contact Gen-Z Motors | GPX Dealer 01609-711911',
   description:
-    'Contact the Gen-Z Motors GPX showrooms in Uttara, Dhaka and Mymensingh. Call 01609-711911 or start a WhatsApp conversation about motorcycles, servicing, spare parts and test rides.',
+    'Call 01609-711911 or message the Gen-Z Motors GPX showrooms on WhatsApp about motorcycles, servicing, spare parts and helmets. Uttara and Mymensingh.',
   ogTitle: 'Contact Gen-Z Motors — Uttara & Mymensingh',
   ogDescription: 'Call or WhatsApp the GPX showrooms. No forms.',
 })

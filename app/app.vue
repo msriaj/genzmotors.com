@@ -10,6 +10,15 @@ import { allAreasServed, dealer, primaryShowroom } from '~/data/dealer'
 const site = useSiteConfig()
 const showroom = primaryShowroom()
 
+// Social defaults for every page; individual pages override title and description.
+useSeoMeta({
+  ogSiteName: dealer.name,
+  ogLocale: 'en_BD',
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+  author: dealer.name,
+})
+
 useSchemaOrg([
   defineLocalBusiness({
     '@type': ['AutoDealer', 'MotorcycleDealer'],

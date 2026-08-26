@@ -3,9 +3,9 @@ import { dealer, fullAddress, telLink } from '~/data/dealer'
 import { bikes } from '~/data/bikes'
 
 useSeoMeta({
-  title: 'Authorized GPX Dealer in Bangladesh | About Gen-Z Motors',
+  title: 'Authorized GPX Dealer in Bangladesh | Gen-Z Motors',
   description:
-    'Gen-Z Motors is an authorized GPX Motorcycles dealer with showrooms in Uttara, Dhaka and Mymensingh, and a 3S centre in Sector 15, Diabari — sales, authorized servicing and genuine spare parts with a two-year engine warranty.',
+    'Gen-Z Motors is an authorized GPX Motorcycles dealer and 3S centre, with showrooms in Uttara, Dhaka and Mymensingh. Part of Speedoz Limited.',
   ogTitle: 'Authorized GPX Dealer — Gen-Z Motors, Uttara',
   ogDescription: 'Sales, service and spare parts under one roof in Uttara, Dhaka.',
 })

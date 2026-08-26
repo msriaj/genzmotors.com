@@ -31,9 +31,9 @@ const faqs = [
 ]
 
 useSeoMeta({
-  title: 'GPX Showroom Mymensingh | Gen-Z Motors, Authorized GPX Dealer',
+  title: 'GPX Showroom Mymensingh | Gen-Z Motors Dealer',
   description:
-    'Gen-Z Motors runs an authorized GPX motorcycle showroom in Mymensingh. See the GPX Demon lineup, arrange a test ride, and get genuine service and spare parts support. Call 01609-711911.',
+    'Authorized GPX motorcycle showroom in Mymensingh. See the Demon lineup, arrange a test ride and get service and genuine spare parts. Call 01609-711911.',
   ogTitle: 'GPX Showroom Mymensingh — Gen-Z Motors',
   ogDescription: 'Authorized GPX dealer serving Mymensingh and the surrounding upazilas.',
 })

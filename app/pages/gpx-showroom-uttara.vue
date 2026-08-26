@@ -37,9 +37,9 @@ const faqs = [
 ]
 
 useSeoMeta({
-  title: 'GPX Showroom Uttara | Authorized GPX Dealer in Sector 15, Diabari, Dhaka',
+  title: 'GPX Showroom Uttara | Authorized Dealer, Sector 15',
   description:
-    'Visit the GPX showroom in Uttara, Dhaka. Gen-Z Motors is an authorized GPX dealer and 3S centre at House 29, Road 09, Sector 15, Diabari — GPX Demon motorcycles, test rides, servicing and genuine spare parts.',
+    'GPX showroom in Sector 15, Diabari, Uttara — House 29, Road 09. Authorized dealer and 3S centre: sales, service, genuine parts and test rides.',
   ogTitle: 'GPX Showroom Uttara — Gen-Z Motors',
   ogDescription:
     'Authorized GPX dealer and 3S centre in Sector 15, Diabari, Uttara. Test rides by appointment.',

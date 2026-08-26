@@ -123,6 +123,9 @@ const year = new Date().getFullYear()
         class="container-x flex flex-col gap-3 py-6 text-xs text-white/60 md:flex-row md:items-center md:justify-between"
       >
         <p>&copy; {{ year }} {{ dealer.legalName }}. All rights reserved.</p>
+        <NuxtLink to="/sitemap" class="text-white/60 transition-colors hover:text-gpx">
+          Sitemap
+        </NuxtLink>
         <p>GPX is a trademark of its respective owner. Gen-Z Motors is an authorized dealer.</p>
       </div>
     </div>

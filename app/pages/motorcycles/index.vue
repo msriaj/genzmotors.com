@@ -6,9 +6,9 @@ const rest = computed(() => bikes.filter((b) => b.slug !== flagship.value.slug))
 import { dealer } from '~/data/dealer'
 
 useSeoMeta({
-  title: 'GPX Motorcycle Lineup | Gen-Z Motors, Uttara & Mymensingh',
+  title: 'GPX Demon Models & Specs | Gen-Z Motors Bangladesh',
   description:
-    'The full GPX lineup at Gen-Z Motors: Demon GR165R, Demon GR165RR Da Corsa and Demon GR250R, with full specifications and every factory colourway. On the floor in Uttara, Dhaka and in Mymensingh.',
+    'Every GPX Demon at Gen-Z Motors: GR165R, GR165RR Da Corsa and GR250R with full specifications and all nine factory colourways. Uttara and Mymensingh.',
   ogTitle: 'GPX Motorcycle Lineup — Gen-Z Motors',
   ogDescription: 'Demon GR165R, GR165RR Da Corsa and GR250R, on the floor in Uttara and Mymensingh.',
 })

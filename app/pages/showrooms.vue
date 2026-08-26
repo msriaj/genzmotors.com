@@ -4,9 +4,9 @@ import { dealer, showrooms, telLink, whatsappLink } from '~/data/dealer'
 import { bikes } from '~/data/bikes'
 
 useSeoMeta({
-  title: 'Gen-Z Motors Showrooms | GPX in Uttara, Dhaka & Mymensingh',
+  title: 'GPX Showrooms in Uttara & Mymensingh | Gen-Z Motors',
   description:
-    'Gen-Z Motors is an authorized GPX motorcycle dealer with showrooms in Uttara, Dhaka and in Mymensingh. See the GPX Demon lineup, book a test ride and get genuine service and spare parts.',
+    'Two Gen-Z Motors GPX showrooms — Sector 15, Diabari in Uttara, Dhaka and Mymensingh. Same lineup, same warranty, same after-sales team.',
   ogTitle: 'Gen-Z Motors Showrooms — Uttara & Mymensingh',
   ogDescription: 'Authorized GPX dealer in Uttara, Dhaka and in Mymensingh.',
 })

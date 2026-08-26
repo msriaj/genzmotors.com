@@ -23,9 +23,9 @@ function branchesFor(model: string) {
 }
 
 useSeoMeta({
-  title: 'Book a GPX Test Ride | Gen-Z Motors, Uttara & Mymensingh',
+  title: 'Book a GPX Test Ride in Uttara or Mymensingh',
   description:
-    'Book a GPX Demon test ride at Gen-Z Motors. Pick your model and showroom — Uttara, Dhaka or Mymensingh — and the request opens straight in WhatsApp. No forms, no waiting.',
+    'Ride a GPX Demon before you buy. Pick your model and showroom and the booking opens in WhatsApp — no forms. Uttara, Dhaka and Mymensingh.',
   ogTitle: 'Book a GPX test ride — Uttara & Mymensingh',
   ogDescription: 'Pick your Demon, pick a showroom, message the team on WhatsApp.',
 })
