@@ -1,0 +1,18 @@
+# dependencies
+node_modules
+
+# build output
+.nuxt
+.output
+.data
+dist
+
+# scraped source material — regenerate with scripts/, not committed
+.scrape
+
+# env & editor
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log

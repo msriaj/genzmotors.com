@@ -1,0 +1,153 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Brand: Toyota red, white, black.
+     Light surfaces carry the site; black is reserved for the hero, the closing band
+     and the footer, so the dark sections read as deliberate punctuation. */
+  /* Dark, but lifted off pure black so surfaces separate:
+     `paper` is the page, `card` a raised panel, `ink` the foreground.
+     Pure black (`bg-black`) is reserved for the hero and the closing band. */
+  --color-paper: #0c0c0e;
+  --color-paper-soft: #141418;
+  --color-paper-mute: #1c1c21;
+  --color-card: #131317;
+  --color-line: #2b2b32;
+
+  --color-ink: #f6f6f8;
+  --color-ink-soft: #d8d8dd;
+  --color-carbon: #1c1c1f;
+  --color-muted: #9a9aa4;
+
+  --color-smoke: #9b9b9b;
+  --color-chalk: #ffffff;
+  --color-gpx: #eb0a1e;
+  --color-gpx-deep: #a70715;
+
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --header-h: 76px;
+}
+
+html {
+  background: var(--color-paper);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Lenis drives scroll; without JS the page still scrolls natively. */
+html.lenis-active {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-gpx);
+  color: #fff;
+}
+
+/* Utility layer -------------------------------------------------------- */
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 84rem;
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility display-hero {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.018em;
+  text-transform: uppercase;
+  /* Page headers, not the home hero: big enough to lead, small enough that a
+     two-line title still sits above the fold on a laptop. */
+  font-size: clamp(2.5rem, 6.2vw, 5.5rem);
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  font-size: clamp(1.95rem, 4.4vw, 3.6rem);
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.008em;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 2.7vw, 2.25rem);
+}
+
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.75rem;
+  color: var(--color-smoke);
+}
+
+@utility rule-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ffffff26 18%, #ffffff26 82%, transparent);
+}
+
+/* Scroll-reveal primitive: visible by default, hidden only once GSAP owns it. */
+.js-reveal[data-reveal-armed='true'] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  will-change: transform, opacity;
+}
+
+/* Route transition ------------------------------------------------------ */
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 0.45s var(--ease-out-expo),
+    filter 0.45s var(--ease-out-expo);
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js-reveal[data-reveal-armed='true'] {
+    opacity: 1;
+    transform: none;
+  }
+}
