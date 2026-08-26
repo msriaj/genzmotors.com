@@ -172,3 +172,8 @@ Cart, checkout, payments, user accounts, wishlist, blog, CMS, i18n, analytics in
     lone card, so `BikeCard` gained a `featured` variant: the GR250R runs full width as a
     two-column feature, and the two 165s pair up underneath. Used on both the home page
     and the lineup page.
+16. **No forms at all.** The test-ride and contact forms were removed. Both pages are now
+    sets of one-tap choices that open WhatsApp with the message pre-written
+    (`WhatsAppChoice.vue`): a card per Demon with a button per showroom on `/test-ride`,
+    and a card per topic on `/contact`, alongside the phone number. The site collects
+    nothing, which also means there is no data to store, protect or lose.

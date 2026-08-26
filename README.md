@@ -28,6 +28,13 @@ static — deploy `.output/public` to any host.
 All model data was taken from the Speedoz Limited catalogue (the parent company) and the
 Gen-Z Motors listing. Nothing is estimated.
 
+## Contact model
+
+There are **no forms anywhere on this site** — no inputs, no storage, no backend. Every
+enquiry is either a `tel:` link or a `wa.me` deep link with the first message already
+written (`WhatsAppChoice.vue`, `whatsappLink()` in `app/data/dealer.ts`). The visitor keeps
+the conversation in their own WhatsApp thread.
+
 ## Still to supply
 
 These are `null` in `app/data/dealer.ts` and are deliberately hidden from the pages and
