@@ -11,13 +11,8 @@ const year = new Date().getFullYear()
       <div>
         <BrandLogo class="h-10 w-auto text-white" />
         <p class="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
-          {{ dealer.role }} and {{ dealer.centreType }} in Uttara, Dhaka. Part of
-          <a
-            :href="dealer.parent.url"
-            target="_blank"
-            rel="noopener"
-            class="text-white transition-colors hover:text-gpx"
-          >{{ dealer.parent.name }}</a>.
+          {{ dealer.role }} and {{ dealer.centreType }}, with showrooms in
+          {{ dealer.cities.join(' and ') }}.
         </p>
       </div>
 
