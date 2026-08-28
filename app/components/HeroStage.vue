@@ -25,10 +25,10 @@ const facts = computed(() => [
   { value: '2 yrs', label: 'Engine warranty' },
 ])
 
-onMounted(() => {
+onMounted(async () => {
   if (prefersReducedMotion() || !lines.value) return
 
-  const { gsap } = useGsap()
+  const { gsap } = await useGsap()
   const targets = lines.value.querySelectorAll('[data-line] > span')
   gsap.set(targets, { yPercent: 115 })
   gsap.to(targets, { yPercent: 0, duration: 1.25, ease: 'expo.out', stagger: 0.08, delay: 0.2 })

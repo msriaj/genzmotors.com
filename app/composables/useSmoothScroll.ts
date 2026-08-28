@@ -18,7 +18,7 @@ export function useSmoothScroll() {
 
   async function init() {
     const { default: LenisCtor } = await import('lenis')
-    const { gsap, ScrollTrigger } = useGsap()
+    const { gsap, ScrollTrigger } = await useGsap()
 
     lenis = new LenisCtor({
       duration: 1.1,

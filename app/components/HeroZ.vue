@@ -318,7 +318,7 @@ async function start() {
 }
 
 onMounted(() => {
-  if (!canRenderWebGL()) return
+  if (!canRenderAmbientWebGL()) return
   whenIdle(() => void start())
 })
 

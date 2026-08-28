@@ -16,7 +16,23 @@ export default defineNuxtConfig({
   modules: ['@nuxt/fonts', '@nuxt/image', '@nuxtjs/seo'],
 
   css: ['~/assets/css/main.css'],
-  vite: { plugins: [tailwindcss()] },
+  vite: {
+    plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        output: {
+          // Keep the animation and 3D libraries in their own chunks. Left alone, the
+          // bundler folds GSAP into the Vue runtime chunk, which is preloaded on every
+          // page — putting 60KB of animation code ahead of the content it animates.
+          manualChunks(id: string) {
+            if (id.includes('node_modules/gsap')) return 'gsap'
+            if (id.includes('node_modules/three')) return 'three'
+            if (id.includes('node_modules/lenis')) return 'lenis'
+          },
+        },
+      },
+    },
+  },
 
   site,
 
@@ -24,7 +40,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/sitemap.xml', '/robots.txt'],
+      routes: ['/', '/sitemap.xml', '/robots.txt', '/llms.txt'],
       failOnError: false,
     },
   },
@@ -126,6 +142,12 @@ export default defineNuxtConfig({
       { name: 'Inter', provider: 'google', weights: [400, 500, 600] },
     ],
     defaults: { subsets: ['latin'] },
+  },
+
+  features: {
+    // Ship the CSS in the document instead of a second round trip; on a high-latency
+    // mobile connection that request costs more than the bytes do.
+    inlineStyles: true,
   },
 
   typescript: { strict: true },

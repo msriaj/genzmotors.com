@@ -83,7 +83,7 @@ onMounted(async () => {
   })
 
   if (props.autoReveal) {
-    const { gsap } = useGsap()
+    const { gsap } = await useGsap()
     plane.uniforms.uProgress!.value = 0
     gsap.to(plane.uniforms.uProgress!, {
       value: 1,
@@ -114,11 +114,11 @@ onBeforeUnmount(() => {
 
 defineExpose({
   /** Used by the colourway switcher to crossfade to a new photograph. */
-  transitionTo(from: string, to: string) {
+  async transitionTo(from: string, to: string) {
     if (!plane) return false
     plane.setTextures(from, to)
     plane.uniforms.uProgress!.value = 0
-    const { gsap } = useGsap()
+    const { gsap } = await useGsap()
     gsap.to(plane.uniforms.uProgress!, { value: 1, duration: 1.2, ease: 'power2.inOut' })
     return true
   },

@@ -7,7 +7,7 @@
  * plain markup.
  */
 export function useTextReveal(target: Ref<HTMLElement | null>, options: { delay?: number } = {}) {
-  onMounted(() => {
+  onMounted(async () => {
     const el = target.value
     if (!el || prefersReducedMotion()) return
 
@@ -34,7 +34,7 @@ export function useTextReveal(target: Ref<HTMLElement | null>, options: { delay?
       spans.push(inner)
     }
 
-    const { gsap } = useGsap()
+    const { gsap } = await useGsap()
     const tween = gsap.from(spans, {
       yPercent: 115,
       duration: 1,

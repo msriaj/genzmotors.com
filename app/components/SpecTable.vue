@@ -7,9 +7,9 @@ const props = defineProps<{ groups: SpecGroup[]; model: string }>()
 const root = ref<HTMLElement | null>(null)
 const activeGroup = ref(0)
 
-onMounted(() => {
+onMounted(async () => {
   if (prefersReducedMotion() || !root.value) return
-  const { gsap, ScrollTrigger } = useGsap()
+  const { gsap, ScrollTrigger } = await useGsap()
   const sections = root.value.querySelectorAll('[data-spec-group]')
 
   const triggers = Array.from(sections).map((section, index) =>

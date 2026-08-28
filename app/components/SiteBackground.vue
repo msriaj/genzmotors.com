@@ -197,7 +197,7 @@ async function start() {
 }
 
 onMounted(() => {
-  if (!canRenderWebGL()) return
+  if (!canRenderAmbientWebGL()) return
   // Never compete with first paint: the field fades in after load, on an idle frame.
   whenIdle(() => void start())
 })

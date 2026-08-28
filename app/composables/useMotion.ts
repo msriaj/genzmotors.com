@@ -1,15 +1,24 @@
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+type GsapModule = typeof import('gsap')['gsap']
+type ScrollTriggerModule = typeof import('gsap/ScrollTrigger')['ScrollTrigger']
 
-let registered = false
+let gsapPromise: Promise<{ gsap: GsapModule; ScrollTrigger: ScrollTriggerModule }> | null = null
 
-/** Registers GSAP plugins once, client-side only. */
+/**
+ * Loads GSAP on demand and registers ScrollTrigger once.
+ *
+ * Importing it at module scope put ~60KB of animation library on the critical path of
+ * every page, ahead of the content it animates. Now it arrives with the effect.
+ */
 export function useGsap() {
-  if (import.meta.client && !registered) {
-    gsap.registerPlugin(ScrollTrigger)
-    registered = true
+  if (!gsapPromise) {
+    gsapPromise = Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+      ([{ gsap }, { ScrollTrigger }]) => {
+        gsap.registerPlugin(ScrollTrigger)
+        return { gsap, ScrollTrigger }
+      },
+    )
   }
-  return { gsap, ScrollTrigger }
+  return gsapPromise
 }
 
 /** True when the visitor asked the OS to reduce motion. */
@@ -69,6 +78,17 @@ export function canRenderWebGL(): boolean {
 }
 
 /**
+ * Ambient WebGL — the background field, the particle mark — is desktop only.
+ * On a phone it would cost half a megabyte of three.js for decoration behind the text.
+ */
+export function canRenderAmbientWebGL(): boolean {
+  if (!import.meta.client) return false
+  if (window.matchMedia('(pointer: coarse)').matches) return false
+  if (window.innerWidth < 1024) return false
+  return canRenderWebGL()
+}
+
+/**
  * Defers work until the page has loaded and the main thread is idle, so an effect can
  * never compete with first paint or push out the largest contentful paint.
  */
@@ -105,11 +125,11 @@ export function useReveal(
 ) {
   const { y = 28, duration = 0.9, stagger = 0.08, start = 'top 82%', children } = options
 
-  onMounted(() => {
+  onMounted(async () => {
     const el = target.value
     if (!el || prefersReducedMotion()) return
 
-    const { gsap, ScrollTrigger } = useGsap()
+    const { gsap, ScrollTrigger } = await useGsap()
     const items: Element[] = children ? Array.from(el.querySelectorAll(children)) : [el]
     if (!items.length) return
 
@@ -136,13 +156,13 @@ export function useReveal(
 export function useCountUp(target: Ref<HTMLElement | null>, to: number, decimals = 0) {
   const display = ref(prefersReducedMotion() ? to : 0)
 
-  onMounted(() => {
+  onMounted(async () => {
     const el = target.value
     if (!el || prefersReducedMotion()) {
       display.value = to
       return
     }
-    const { gsap } = useGsap()
+    const { gsap } = await useGsap()
     const proxy = { n: 0 }
     const tween = gsap.to(proxy, {
       n: to,
