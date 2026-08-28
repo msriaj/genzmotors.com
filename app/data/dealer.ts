@@ -23,6 +23,7 @@ export interface Showroom {
   /** Null until Gen-Z Motors supplies the details — never guessed, never in JSON-LD. */
   street: string | null
   area: string | null
+  postalCode: string | null
   phoneDisplay: string | null
   phoneDial: string | null
   mapsPlaceUrl: string | null
@@ -49,6 +50,7 @@ export const showrooms: Showroom[] = [
     region: 'Dhaka',
     street: 'House 29, Road 09',
     area: 'Sector 15, Diabari',
+    postalCode: null,
     phoneDisplay: '01609-711911',
     phoneDial: '+8801609711911',
     mapsPlaceUrl: null,
@@ -79,10 +81,11 @@ export const showrooms: Showroom[] = [
     name: 'GPX Showroom Mymensingh',
     city: 'Mymensingh',
     region: 'Mymensingh',
-    street: null,
-    area: null,
-    phoneDisplay: null,
-    phoneDial: null,
+    street: 'Kadur Bari Mor',
+    area: 'Digharkanda, Mymensingh Sadar',
+    postalCode: '2200',
+    phoneDisplay: '01601-711903',
+    phoneDial: '+8801601711903',
     mapsPlaceUrl: null,
     latitude: null,
     longitude: null,

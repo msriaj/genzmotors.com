@@ -19,9 +19,9 @@ useReveal(showroomRoot, { children: '[data-reveal]', stagger: 0.1 })
 const gearPreview = computed(() => gear.filter((g) => g.image).slice(0, 4))
 
 useSeoMeta({
-  title: 'GPX Motorcycles Bangladesh | Gen-Z Motors, Uttara',
+  title: 'GPX Showroom Bangladesh | Gen-Z Motors, Authorized Dealer',
   description:
-    'Authorized GPX dealer in Uttara, Dhaka and Mymensingh. See the Demon GR165R, GR165RR Da Corsa and GR250R, book a test ride, get genuine parts.',
+    'GPX showrooms in Uttara, Dhaka and Mymensingh. See the Demon GR165R, GR165RR Da Corsa and GR250R, book a test ride, get genuine parts. 01609-711911.',
   ogTitle: 'Gen-Z Motors — Authorized GPX Dealer, Uttara & Mymensingh',
   ogDescription:
     'The GPX Demon lineup on the floor in Uttara and Mymensingh. Sales, service and genuine spare parts.',

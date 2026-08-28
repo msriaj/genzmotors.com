@@ -46,6 +46,31 @@ export default defineNuxtConfig({
     '/gear': { sitemap: { priority: 0.6, changefreq: 'monthly' } },
     '/authorized-dealer': { sitemap: { priority: 0.6, changefreq: 'yearly' } },
     '/sitemap': { sitemap: { priority: 0.2, changefreq: 'yearly' } },
+
+    // Legacy WooCommerce URLs. Search Console still shows impressions on these, so they
+    // 301 to the closest page on the new site rather than 404ing.
+    '/product/gpx-demon-gr165r-black-space/': { redirect: { to: '/motorcycles/gpx-demon-gr165r', statusCode: 301 } },
+    '/product/gpx-demon-gr165r-red-fire/': { redirect: { to: '/motorcycles/gpx-demon-gr165r', statusCode: 301 } },
+    '/product/gpx-demon-gr165rr-da-corsa-daytona-black/': { redirect: { to: '/motorcycles/gpx-demon-gr165rr-da-corsa', statusCode: 301 } },
+    '/product/gpx-demon-gr165rr-da-corsa-blue/': { redirect: { to: '/motorcycles/gpx-demon-gr165rr-da-corsa', statusCode: 301 } },
+    '/product/gpx-demon-gr165rr-da-corsa-red/': { redirect: { to: '/motorcycles/gpx-demon-gr165rr-da-corsa', statusCode: 301 } },
+    '/product/1859/': { redirect: { to: '/motorcycles/gpx-demon-gr165rr-da-corsa', statusCode: 301 } },
+    '/product-category/helmet/': { redirect: { to: '/gear', statusCode: 301 } },
+    '/product-category/helmet/mt/': { redirect: { to: '/gear', statusCode: 301 } },
+    '/product-category/helmet/torq/': { redirect: { to: '/gear', statusCode: 301 } },
+    '/product-category/helmet/origine/': { redirect: { to: '/gear', statusCode: 301 } },
+    '/category/body-parts/': { redirect: { to: '/service-support', statusCode: 301 } },
+    '/about-us/': { redirect: { to: '/authorized-dealer', statusCode: 301 } },
+    '/contact-us/': { redirect: { to: '/contact', statusCode: 301 } },
+    '/faq/': { redirect: { to: '/gpx-showroom-uttara', statusCode: 301 } },
+    '/shop/': { redirect: { to: '/motorcycles', statusCode: 301 } },
+    '/cart/': { redirect: { to: '/motorcycles', statusCode: 301 } },
+    '/checkout/': { redirect: { to: '/motorcycles', statusCode: 301 } },
+    '/my-account/': { redirect: { to: '/contact', statusCode: 301 } },
+    '/2020/': { redirect: { to: '/', statusCode: 301 } },
+    '/product/**': { redirect: { to: '/motorcycles', statusCode: 301 } },
+    '/product-category/**': { redirect: { to: '/gear', statusCode: 301 } },
+    '/category/**': { redirect: { to: '/service-support', statusCode: 301 } },
   },
 
   image: {

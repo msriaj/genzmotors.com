@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: 'Does Gen-Z Motors have a showroom outside Dhaka?',
-    a: 'Yes — alongside the Uttara showroom there is a Gen-Z Motors showroom in Mymensingh. Call 01609-711911 for its address and opening times.',
+    a: 'Yes — alongside the Uttara showroom there is a Gen-Z Motors showroom at Kadur Bari Mor, Digharkanda, Mymensingh Sadar. Its direct line is 01601-711903.',
   },
   {
     q: 'Do you service GPX motorcycles bought elsewhere?',
@@ -239,8 +239,7 @@ useReveal(grid, { children: '[data-reveal]', stagger: 0.07 })
               {{ showroom.city }}
             </address>
             <p v-else class="mt-3 text-sm leading-relaxed text-muted">
-              Address and direct line are being confirmed — call
-              {{ dealer.contact.phoneDisplay }} and we will point you to the branch.
+              Call {{ dealer.contact.phoneDisplay }} and we will point you to the branch.
             </p>
             <a
               :href="showroom.phoneDial ? `tel:${showroom.phoneDial}` : telLink()"

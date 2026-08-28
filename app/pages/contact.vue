@@ -129,14 +129,17 @@ useSchemaOrg([
           <p class="eyebrow mb-4">{{ showroom.region }}</p>
           <h3 class="display-lg text-ink">{{ showroom.city }}</h3>
 
-          <address v-if="showroom.street" class="mt-5 not-italic leading-relaxed text-muted">
+          <address class="mt-5 not-italic leading-relaxed text-muted">
             {{ showroom.street }}, {{ showroom.area }}<br >
-            {{ showroom.city }}
+            {{ showroom.city }}<span v-if="showroom.postalCode"> {{ showroom.postalCode }}</span>
           </address>
-          <p v-else class="mt-5 leading-relaxed text-muted">
-            The street address for this branch is not published yet. Call
-            {{ dealer.contact.phoneDisplay }} and we will give you directions.
-          </p>
+
+          <a
+            :href="`tel:${showroom.phoneDial ?? dealer.contact.phoneDial}`"
+            class="mt-4 inline-block font-display text-lg text-ink transition-colors hover:text-gpx"
+          >
+            {{ showroom.phoneDisplay ?? dealer.contact.phoneDisplay }}
+          </a>
 
           <div class="mt-8 flex flex-wrap gap-3">
             <AppButton :to="showroom.route">Showroom details</AppButton>

@@ -2,9 +2,8 @@
 /**
  * Local landing page for Mymensingh searches.
  *
- * The branch exists, but its street address and direct line have not been supplied, so
- * this page states what is known, routes visitors to the main number, and stays out of
- * LocalBusiness structured data until an address exists.
+ * The branch has its own address and direct line, so it carries its own AutoDealer node
+ * in the structured data rather than deferring to the Uttara identity.
  */
 import { dealer, showroomBySlug, telLink, whatsappLink } from '~/data/dealer'
 import { bikes } from '~/data/bikes'
@@ -13,8 +12,8 @@ const branch = showroomBySlug('mymensingh')!
 
 const faqs = [
   {
-    q: 'Is there a GPX showroom in Mymensingh?',
-    a: `Yes. Gen-Z Motors, an authorized GPX Motorcycles dealer, has a showroom in Mymensingh alongside its Uttara, Dhaka branch. Call ${dealer.contact.phoneDisplay} for directions.`,
+    q: 'Where is the GPX showroom in Mymensingh?',
+    a: `Gen-Z Motors is at ${branch.street}, ${branch.area}, Mymensingh ${branch.postalCode}. Call ${branch.phoneDisplay} for directions.`,
   },
   {
     q: 'Which GPX motorcycles can I see in Mymensingh?',
@@ -22,28 +21,47 @@ const faqs = [
   },
   {
     q: 'Can I book a test ride in Mymensingh?',
-    a: 'Yes, by appointment. Send your preferred model and day on WhatsApp and the team will confirm the branch and time.',
+    a: `Yes, by appointment. Call ${branch.phoneDisplay} or send your preferred model and day on WhatsApp, and the team will confirm the time.`,
   },
   {
     q: 'Do you deliver to areas around Mymensingh?',
-    a: `The branch serves ${branch.areasServed.join(', ')}. Call to arrange collection or delivery.`,
+    a: `The branch serves ${branch.areasServed.join(', ')}. Call ${branch.phoneDisplay} to arrange collection or delivery.`,
   },
 ]
 
 useSeoMeta({
   title: 'GPX Showroom Mymensingh | Gen-Z Motors Dealer',
   description:
-    'Authorized GPX motorcycle showroom in Mymensingh. See the Demon lineup, arrange a test ride and get service and genuine spare parts. Call 01609-711911.',
+    'Authorized GPX showroom at Kadur Bari Mor, Digharkanda, Mymensingh Sadar. See the Demon lineup, book a test ride, get genuine parts. Call 01601-711903.',
   ogTitle: 'GPX Showroom Mymensingh — Gen-Z Motors',
   ogDescription: 'Authorized GPX dealer serving Mymensingh and the surrounding upazilas.',
 })
 
 defineOgImageComponent('Dealer', {
   title: 'GPX Showroom Mymensingh',
-  description: 'Authorized GPX dealer — call 01609-711911',
+  description: 'Digharkanda, Mymensingh Sadar — 01601-711903',
 })
 
 useSchemaOrg([
+  defineLocalBusiness({
+    '@type': ['AutoDealer', 'MotorcycleDealer'],
+    '@id': `${useSiteConfig().url}/gpx-showroom-mymensingh#branch`,
+    'name': branch.name,
+    'description':
+      'Authorized GPX Motorcycles showroom in Digharkanda, Mymensingh Sadar — sales, service support and genuine spare parts.',
+    'telephone': branch.phoneDial,
+    'currenciesAccepted': 'BDT',
+    'address': {
+      streetAddress: `${branch.street}, ${branch.area}`,
+      addressLocality: branch.city,
+      addressRegion: branch.region,
+      postalCode: branch.postalCode,
+      addressCountry: dealer.address.countryCode,
+    },
+    'areaServed': branch.areasServed.map((name) => ({ '@type': 'Place', name })),
+    'brand': { '@type': 'Brand', name: 'GPX Motorcycles' },
+    'parentOrganization': { '@type': 'Organization', name: dealer.name, url: useSiteConfig().url },
+  }),
   defineBreadcrumb({
     itemListElement: [
       { name: 'Home', item: '/' },
@@ -82,7 +100,7 @@ const openFaq = ref<number | null>(0)
             the same Demon lineup within reach of riders outside Dhaka.
           </p>
           <div class="mt-8 flex flex-wrap gap-4">
-            <AppButton :href="telLink()">Call {{ dealer.contact.phoneDisplay }}</AppButton>
+            <AppButton :href="`tel:${branch.phoneDial}`">Call {{ branch.phoneDisplay }}</AppButton>
             <AppButton
               :href="whatsappLink('Hi Gen-Z Motors, I would like directions to the Mymensingh showroom.')"
               variant="ghost"
@@ -97,23 +115,25 @@ const openFaq = ref<number | null>(0)
     <section class="container-x py-16 lg:py-24">
       <div class="grid gap-8 lg:grid-cols-3">
         <div class="border border-line bg-card p-8">
-          <h2 class="eyebrow mb-4">Finding us</h2>
-          <p class="leading-relaxed text-muted">
-            The street address for the Mymensingh branch is not published here yet. Call the
-            number below and the team will give you directions before you travel.
-          </p>
+          <h2 class="eyebrow mb-4">Address</h2>
+          <address class="not-italic text-lg leading-relaxed text-ink">
+            {{ branch.street }}<br >
+            {{ branch.area }}<br >
+            {{ branch.city }} {{ branch.postalCode }}
+          </address>
         </div>
 
         <div class="border border-line bg-card p-8">
           <h2 class="eyebrow mb-4">Contact</h2>
           <a
-            :href="telLink()"
+            :href="`tel:${branch.phoneDial}`"
             class="block font-display text-2xl text-ink transition-colors hover:text-gpx"
           >
-            {{ dealer.contact.phoneDisplay }}
+            {{ branch.phoneDisplay }}
           </a>
           <p class="mt-3 text-sm leading-relaxed text-muted">
-            One number reaches both showrooms — say you are calling about Mymensingh.
+            Direct line to the Mymensingh branch. The Uttara showroom is on
+            {{ dealer.contact.phoneDisplay }}.
           </p>
         </div>
 

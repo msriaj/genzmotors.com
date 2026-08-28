@@ -25,5 +25,117 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/product/gpx-demon-gr165r-black-space",
+      "destination": "/motorcycles/gpx-demon-gr165r",
+      "permanent": true
+    },
+    {
+      "source": "/product/gpx-demon-gr165r-red-fire",
+      "destination": "/motorcycles/gpx-demon-gr165r",
+      "permanent": true
+    },
+    {
+      "source": "/product/gpx-demon-gr165rr-da-corsa-daytona-black",
+      "destination": "/motorcycles/gpx-demon-gr165rr-da-corsa",
+      "permanent": true
+    },
+    {
+      "source": "/product/gpx-demon-gr165rr-da-corsa-blue",
+      "destination": "/motorcycles/gpx-demon-gr165rr-da-corsa",
+      "permanent": true
+    },
+    {
+      "source": "/product/gpx-demon-gr165rr-da-corsa-red",
+      "destination": "/motorcycles/gpx-demon-gr165rr-da-corsa",
+      "permanent": true
+    },
+    {
+      "source": "/product/1859",
+      "destination": "/motorcycles/gpx-demon-gr165rr-da-corsa",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/helmet",
+      "destination": "/gear",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/helmet/mt",
+      "destination": "/gear",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/helmet/torq",
+      "destination": "/gear",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/helmet/origine",
+      "destination": "/gear",
+      "permanent": true
+    },
+    {
+      "source": "/category/body-parts",
+      "destination": "/service-support",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/authorized-dealer",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/faq",
+      "destination": "/gpx-showroom-uttara",
+      "permanent": true
+    },
+    {
+      "source": "/shop",
+      "destination": "/motorcycles",
+      "permanent": true
+    },
+    {
+      "source": "/cart",
+      "destination": "/motorcycles",
+      "permanent": true
+    },
+    {
+      "source": "/checkout",
+      "destination": "/motorcycles",
+      "permanent": true
+    },
+    {
+      "source": "/my-account",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/2020",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/product/:slug*",
+      "destination": "/motorcycles",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/:slug*",
+      "destination": "/gear",
+      "permanent": true
+    },
+    {
+      "source": "/category/:slug*",
+      "destination": "/service-support",
+      "permanent": true
+    }
   ]
 }

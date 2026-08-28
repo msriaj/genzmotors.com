@@ -4,7 +4,7 @@ import { dealer, showrooms, telLink, whatsappLink } from '~/data/dealer'
 import { bikes } from '~/data/bikes'
 
 useSeoMeta({
-  title: 'GPX Showrooms in Uttara & Mymensingh | Gen-Z Motors',
+  title: 'GPX Demon Showroom Near You | Uttara & Mymensingh',
   description:
     'Two Gen-Z Motors GPX showrooms — Sector 15, Diabari in Uttara, Dhaka and Mymensingh. Same lineup, same warranty, same after-sales team.',
   ogTitle: 'Gen-Z Motors Showrooms — Uttara & Mymensingh',
@@ -64,8 +64,7 @@ useReveal(grid, { children: '[data-reveal]', stagger: 0.1 })
             {{ showroom.city }}
           </address>
           <p v-else class="mt-5 leading-relaxed text-muted">
-            Street address and direct line are being confirmed. Call
-            {{ dealer.contact.phoneDisplay }} and we will give you directions.
+            Call {{ dealer.contact.phoneDisplay }} and we will give you directions.
           </p>
 
           <ul class="mt-6 space-y-2 border-t border-line pt-6 text-sm text-muted">
