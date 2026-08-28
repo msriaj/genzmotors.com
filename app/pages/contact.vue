@@ -124,6 +124,10 @@ useSchemaOrg([
     <section class="container-x py-16 lg:py-24">
       <SectionHeading eyebrow="Where we are" title="Both showrooms" />
 
+      <div class="mt-12 grid gap-6 lg:grid-cols-2">
+        <ShowroomMap v-for="showroom in showrooms" :key="showroom.slug" :showroom="showroom" />
+      </div>
+
       <div class="mt-12 grid gap-6 md:grid-cols-2">
         <div v-for="showroom in showrooms" :key="showroom.slug" class="border border-line bg-card p-8 lg:p-10">
           <p class="eyebrow mb-4">{{ showroom.region }}</p>

@@ -37,6 +37,8 @@ export interface Showroom {
   phoneDisplay: string | null
   phoneDial: string | null
   mapsPlaceUrl: string | null
+  /** `src` for the Google Maps embed iframe. Null until the branch supplies one. */
+  mapsEmbedUrl: string | null
   latitude: number | null
   longitude: number | null
   /** Null while the branch has not confirmed its hours — never guessed. */
@@ -65,9 +67,12 @@ export const showrooms: Showroom[] = [
     postalCode: null,
     phoneDisplay: '01609-711911',
     phoneDial: '+8801609711911',
-    mapsPlaceUrl: 'https://share.google/Y76sjlhHvYEUme2DB',
-    latitude: null,
-    longitude: null,
+    mapsPlaceUrl: 'https://maps.google.com/?cid=18020976205576061920',
+    mapsEmbedUrl:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49288.331119716895!2d90.42440454391537!3d23.86356999399744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c3004221993b%3A0xfa175e613720c3e0!2sGPX%20Uttara%20-%20Gen-Z%20Motors!5e0!3m2!1sen!2sbd!4v1787917803089!5m2!1sen!2sbd',
+    // From the Google listing's own embed, so the pin matches what customers navigate to.
+    latitude: 23.86357,
+    longitude: 90.424405,
     openingHours: [
       {
         days: 'Every day',
@@ -106,9 +111,11 @@ export const showrooms: Showroom[] = [
     postalCode: '2200',
     phoneDisplay: '01601-711903',
     phoneDial: '+8801601711903',
-    mapsPlaceUrl: 'https://share.google/HE41qbImNSPNLimNi',
-    latitude: null,
-    longitude: null,
+    mapsPlaceUrl: 'https://maps.google.com/?cid=2273111878763864942',
+    mapsEmbedUrl:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.1030020742737!2d90.40688657594913!3d24.72334385072941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x37564fb1197b4013%3A0x1f8bb735d470e36e!2sGpx%20Genz%20Motors%20Mymensingh!5e0!3m2!1sen!2sbd!4v1787917833765!5m2!1sen!2sbd',
+    latitude: 24.723344,
+    longitude: 90.406887,
     openingHours: null,
     isPrimary: false,
     offers: ['New GPX motorcycle sales', 'Service and spare parts support', 'Helmets and rider gear'],
@@ -195,6 +202,12 @@ export const showroomBySlug = (slug: string): Showroom | undefined =>
 
 /** A branch can be mapped as soon as it has a Google listing, coordinates or not. */
 export const hasMap = (showroom: Showroom): boolean => showroom.mapsPlaceUrl !== null
+
+/** Geo coordinates for structured data, only when the branch actually has them. */
+export const geoOf = (showroom: Showroom) =>
+  showroom.latitude !== null && showroom.longitude !== null
+    ? { '@type': 'GeoCoordinates', 'latitude': showroom.latitude, 'longitude': showroom.longitude }
+    : undefined
 
 /** '9:00 AM' from '09:00' — schema keeps 24-hour, the page shows 12-hour. */
 export const formatTime = (value: string): string => {

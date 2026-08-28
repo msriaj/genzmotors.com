@@ -5,7 +5,7 @@
  * Fields Gen-Z Motors has not published (opening hours, email, geo) are omitted rather
  * than guessed.
  */
-import { allAreasServed, dealer, primaryShowroom } from '~/data/dealer'
+import { allAreasServed, dealer, geoOf, primaryShowroom } from '~/data/dealer'
 
 const site = useSiteConfig()
 const showroom = primaryShowroom()
@@ -38,6 +38,7 @@ useSchemaOrg([
     },
     'areaServed': allAreasServed().map((name) => ({ '@type': 'Place', name })),
     'hasMap': showroom.mapsPlaceUrl ?? undefined,
+    'geo': geoOf(showroom),
     'openingHoursSpecification': (showroom.openingHours ?? []).map((slot) => ({
       '@type': 'OpeningHoursSpecification',
       'dayOfWeek': slot.dayOfWeek,

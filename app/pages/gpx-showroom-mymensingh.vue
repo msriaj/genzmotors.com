@@ -5,7 +5,7 @@
  * The branch has its own address and direct line, so it carries its own AutoDealer node
  * in the structured data rather than deferring to the Uttara identity.
  */
-import { dealer, formatHours, showroomBySlug, telLink, whatsappLink } from '~/data/dealer'
+import { dealer, formatHours, geoOf, showroomBySlug, telLink, whatsappLink } from '~/data/dealer'
 import { bikes } from '~/data/bikes'
 
 const branch = showroomBySlug('mymensingh')!
@@ -60,6 +60,7 @@ useSchemaOrg([
     },
     'areaServed': branch.areasServed.map((name) => ({ '@type': 'Place', name })),
     'hasMap': branch.mapsPlaceUrl ?? undefined,
+    'geo': geoOf(branch),
     'brand': { '@type': 'Brand', name: 'GPX Motorcycles' },
     'parentOrganization': { '@type': 'Organization', name: dealer.name, url: useSiteConfig().url },
   }),
@@ -165,6 +166,10 @@ const openFaq = ref<number | null>(0)
           </ul>
         </div>
       </div>
+    </section>
+
+    <section class="container-x pb-16">
+      <ShowroomMap :showroom="branch" />
     </section>
 
     <section class="border-y border-line bg-paper-soft py-20">

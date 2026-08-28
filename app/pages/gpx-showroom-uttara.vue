@@ -241,6 +241,11 @@ useReveal(grid, { children: '[data-reveal]', stagger: 0.07 })
       </ul>
     </section>
 
+    <!-- Map ------------------------------------------------------------------- -->
+    <section class="container-x pb-16 lg:pb-24">
+      <ShowroomMap :showroom="uttara" />
+    </section>
+
     <!-- Other branch --------------------------------------------------------- -->
     <section class="border-t border-line bg-paper-soft py-16">
       <div class="container-x">
