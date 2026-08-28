@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /** Hub for every Gen-Z Motors location. Each branch also has its own local landing page. */
-import { dealer, showrooms, telLink, whatsappLink } from '~/data/dealer'
+import { dealer, formatHours, showrooms, telLink, whatsappLink } from '~/data/dealer'
 import { bikes } from '~/data/bikes'
 
 useSeoMeta({
@@ -71,7 +71,11 @@ useReveal(grid, { children: '[data-reveal]', stagger: 0.1 })
             <li v-for="item in showroom.offers" :key="item">{{ item }}</li>
           </ul>
 
-          <p class="mt-6 text-xs uppercase tracking-[0.18em] text-muted">
+          <p v-if="showroom.openingHours" class="mt-5 font-display text-sm uppercase tracking-[0.14em] text-ink">
+            {{ showroom.openingHours.map(formatHours).join(' · ') }}
+          </p>
+
+          <p class="mt-4 text-xs uppercase tracking-[0.18em] text-muted">
             Serving {{ showroom.areasServed.slice(0, 4).join(' · ') }}
           </p>
 
@@ -82,6 +86,9 @@ useReveal(grid, { children: '[data-reveal]', stagger: 0.1 })
               variant="ghost"
             >
               {{ showroom.phoneDisplay ?? dealer.contact.phoneDisplay }}
+            </AppButton>
+            <AppButton v-if="showroom.mapsPlaceUrl" :href="showroom.mapsPlaceUrl" variant="quiet">
+              Directions
             </AppButton>
           </div>
         </article>

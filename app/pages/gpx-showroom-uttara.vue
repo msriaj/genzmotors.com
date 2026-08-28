@@ -1,6 +1,15 @@
 <script setup lang="ts">
 /** Dedicated local-SEO landing page for "GPX Showroom Uttara" style searches. */
-import { dealer, fullAddress, hasMap, showroomBySlug, showrooms, telLink, whatsappLink } from '~/data/dealer'
+import {
+  dealer,
+  formatHours,
+  fullAddress,
+  hasMap,
+  showroomBySlug,
+  showrooms,
+  telLink,
+  whatsappLink,
+} from '~/data/dealer'
 import { bikes } from '~/data/bikes'
 
 const uttara = showroomBySlug('uttara')!
@@ -17,6 +26,10 @@ const faqs = [
   {
     q: 'Which GPX motorcycles can I see in Uttara?',
     a: `The showroom stocks the ${bikes.map((b) => b.name).join(' and the ')}, across ${bikes.reduce((n, b) => n + b.colourways.length, 0)} factory colourways.`,
+  },
+  {
+    q: 'What are the Uttara showroom opening hours?',
+    a: 'The Uttara showroom is open every day, 9 AM to 9 PM. Walk in to look at the bikes; test rides are booked ahead by phone or WhatsApp.',
   },
   {
     q: 'Can I test ride a GPX bike before buying?',
@@ -105,7 +118,7 @@ useReveal(grid, { children: '[data-reveal]', stagger: 0.07 })
 
     <!-- Visit card -------------------------------------------------------- -->
     <section class="container-x py-16 lg:py-24">
-      <div class="grid gap-8 lg:grid-cols-3">
+      <div class="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
         <div class="border border-line bg-card p-8">
           <h2 class="eyebrow mb-4">Address</h2>
           <address class="not-italic text-lg leading-relaxed text-ink">
@@ -114,14 +127,24 @@ useReveal(grid, { children: '[data-reveal]', stagger: 0.07 })
             {{ dealer.address.city }}
           </address>
           <a
-            v-if="dealer.address.mapsPlaceUrl"
-            :href="dealer.address.mapsPlaceUrl"
+            v-if="uttara.mapsPlaceUrl"
+            :href="uttara.mapsPlaceUrl"
             target="_blank"
             rel="noopener"
             class="mt-5 inline-block font-display text-sm uppercase tracking-[0.18em] text-gpx"
           >
             Open in Google Maps
           </a>
+        </div>
+
+        <div class="border border-line bg-card p-8">
+          <h2 class="eyebrow mb-4">Opening hours</h2>
+          <ul v-if="uttara.openingHours" class="space-y-1 text-lg text-ink">
+            <li v-for="slot in uttara.openingHours" :key="slot.days">{{ formatHours(slot) }}</li>
+          </ul>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Walk in any day — no appointment needed to look. Test rides are booked ahead.
+          </p>
         </div>
 
         <div class="border border-line bg-card p-8">
@@ -286,10 +309,6 @@ useReveal(grid, { children: '[data-reveal]', stagger: 0.07 })
       </div>
     </section>
 
-    <section v-if="!hasMap()" class="container-x py-16">
-      <p class="text-xs uppercase tracking-[0.2em] text-muted">
-        Map embed pending — add coordinates in app/data/dealer.ts
-      </p>
-    </section>
+
   </div>
 </template>

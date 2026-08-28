@@ -13,6 +13,16 @@ export interface DealerContact {
   email: string | null
 }
 
+export interface OpeningHours {
+  /** Human label, e.g. 'Every day'. */
+  days: string
+  /** 24-hour times, so they can go straight into schema.org. */
+  opens: string
+  closes: string
+  /** schema.org day names this slot covers. */
+  dayOfWeek: string[]
+}
+
 export interface Showroom {
   slug: string
   /** Route segment for this showroom's local landing page. */
@@ -29,6 +39,8 @@ export interface Showroom {
   mapsPlaceUrl: string | null
   latitude: number | null
   longitude: number | null
+  /** Null while the branch has not confirmed its hours — never guessed. */
+  openingHours: OpeningHours[] | null
   isPrimary: boolean
   /** What this branch does, for the hub and landing pages. */
   offers: string[]
@@ -53,9 +65,17 @@ export const showrooms: Showroom[] = [
     postalCode: null,
     phoneDisplay: '01609-711911',
     phoneDial: '+8801609711911',
-    mapsPlaceUrl: null,
+    mapsPlaceUrl: 'https://share.google/Y76sjlhHvYEUme2DB',
     latitude: null,
     longitude: null,
+    openingHours: [
+      {
+        days: 'Every day',
+        opens: '09:00',
+        closes: '21:00',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      },
+    ],
     isPrimary: true,
     offers: [
       'New GPX motorcycle sales',
@@ -86,9 +106,10 @@ export const showrooms: Showroom[] = [
     postalCode: '2200',
     phoneDisplay: '01601-711903',
     phoneDial: '+8801601711903',
-    mapsPlaceUrl: null,
+    mapsPlaceUrl: 'https://share.google/HE41qbImNSPNLimNi',
     latitude: null,
     longitude: null,
+    openingHours: null,
     isPrimary: false,
     offers: ['New GPX motorcycle sales', 'Service and spare parts support', 'Helmets and rider gear'],
     areasServed: ['Mymensingh city', 'Trishal', 'Bhaluka', 'Muktagacha', 'Gouripur', 'Greater Mymensingh'],
@@ -128,9 +149,6 @@ export const dealer = {
     whatsapp: '8801609711911',
     email: null,
   } satisfies DealerContact,
-
-  /** Not published on the old site — left empty so no opening hours are invented. */
-  openingHours: null as { days: string; opens: string; closes: string }[] | null,
 
   ownership: {
     /** Authorization paperwork numbers are not public. Do not invent one. */
@@ -175,8 +193,21 @@ export const allAreasServed = (): string[] => showrooms.flatMap((s) => s.areasSe
 export const showroomBySlug = (slug: string): Showroom | undefined =>
   showrooms.find((s) => s.slug === slug)
 
-export const hasMap = (): boolean =>
-  dealer.address.latitude !== null && dealer.address.longitude !== null
+/** A branch can be mapped as soon as it has a Google listing, coordinates or not. */
+export const hasMap = (showroom: Showroom): boolean => showroom.mapsPlaceUrl !== null
+
+/** '9:00 AM' from '09:00' — schema keeps 24-hour, the page shows 12-hour. */
+export const formatTime = (value: string): string => {
+  const [h = '0', m = '00'] = value.split(':')
+  const hour = Number(h)
+  const suffix = hour < 12 ? 'AM' : 'PM'
+  const display = hour % 12 === 0 ? 12 : hour % 12
+  return m === '00' ? `${display} ${suffix}` : `${display}:${m} ${suffix}`
+}
+
+/** 'Every day, 9 AM to 9 PM' */
+export const formatHours = (slot: OpeningHours): string =>
+  `${slot.days}, ${formatTime(slot.opens)} to ${formatTime(slot.closes)}`
 
 export const fullAddress = (): string =>
   `${dealer.address.street}, ${dealer.address.sector}, ${dealer.address.city}`

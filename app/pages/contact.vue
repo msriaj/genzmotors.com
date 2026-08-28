@@ -5,7 +5,7 @@
  * Every route here is a real conversation: a WhatsApp thread with the message already
  * written, or the phone. The site stores nothing and asks for nothing.
  */
-import { dealer, hasMap, showrooms, telLink, whatsappLink } from '~/data/dealer'
+import { dealer, formatHours, showrooms, telLink, whatsappLink } from '~/data/dealer'
 
 const topics = [
   {
@@ -141,8 +141,39 @@ useSchemaOrg([
             {{ showroom.phoneDisplay ?? dealer.contact.phoneDisplay }}
           </a>
 
+          <p v-if="showroom.openingHours" class="mt-2 text-sm text-muted">
+            {{ showroom.openingHours.map(formatHours).join(' · ') }}
+          </p>
+
+          <a
+            v-if="showroom.mapsPlaceUrl"
+            :href="showroom.mapsPlaceUrl"
+            target="_blank"
+            rel="noopener"
+            class="mt-3 block font-display text-xs uppercase tracking-[0.18em] text-gpx"
+          >
+            Open in Google Maps
+          </a>
+
+          <p v-if="showroom.openingHours" class="mt-4 font-display text-sm uppercase tracking-[0.14em] text-ink">
+            {{ showroom.openingHours.map(formatHours).join(' · ') }}
+          </p>
+          <p v-else class="mt-4 text-sm text-muted">
+            Call {{ showroom.phoneDisplay ?? dealer.contact.phoneDisplay }} to check hours.
+          </p>
+
+          <a
+            :href="`tel:${showroom.phoneDial ?? dealer.contact.phoneDial}`"
+            class="mt-4 inline-block font-display text-lg text-ink transition-colors hover:text-gpx"
+          >
+            {{ showroom.phoneDisplay ?? dealer.contact.phoneDisplay }}
+          </a>
+
           <div class="mt-8 flex flex-wrap gap-3">
             <AppButton :to="showroom.route">Showroom details</AppButton>
+            <AppButton v-if="showroom.mapsPlaceUrl" :href="showroom.mapsPlaceUrl" variant="ghost">
+              Directions
+            </AppButton>
             <AppButton
               :href="whatsappLink(`Hi Gen-Z Motors, could you send me directions to your ${showroom.city} showroom?`)"
               variant="ghost"
@@ -153,25 +184,6 @@ useSchemaOrg([
         </div>
       </div>
 
-      <div v-if="dealer.openingHours" class="mt-6 border border-line bg-card p-8">
-        <h2 class="eyebrow mb-4">Opening hours</h2>
-        <ul class="space-y-1 text-sm text-muted">
-          <li v-for="slot in dealer.openingHours" :key="slot.days">
-            {{ slot.days }} — {{ slot.opens }} to {{ slot.closes }}
-          </li>
-        </ul>
-      </div>
-      <div v-else class="mt-6 border border-dashed border-line p-8">
-        <h2 class="eyebrow mb-4">Opening hours</h2>
-        <p class="text-sm leading-relaxed text-muted">
-          Not published yet — call before travelling, or add them in
-          <code class="text-ink">app/data/dealer.ts</code> to show them here.
-        </p>
-      </div>
-
-      <p v-if="!hasMap()" class="mt-6 text-xs uppercase tracking-[0.2em] text-muted/70">
-        Map embed pending — add coordinates and the Google Maps link in app/data/dealer.ts
-      </p>
     </section>
   </div>
 </template>

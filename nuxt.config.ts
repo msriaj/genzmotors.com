@@ -92,6 +92,11 @@ export default defineNuxtConfig({
     ],
   },
 
+  linkChecker: {
+    // The report is what tells us which links it dislikes.
+    report: { markdown: true },
+  },
+
   robots: {
     // Nothing to hide: the whole static site should be crawlable.
     disallow: [],

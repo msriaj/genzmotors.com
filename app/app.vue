@@ -37,6 +37,13 @@ useSchemaOrg([
       addressCountry: dealer.address.countryCode,
     },
     'areaServed': allAreasServed().map((name) => ({ '@type': 'Place', name })),
+    'hasMap': showroom.mapsPlaceUrl ?? undefined,
+    'openingHoursSpecification': (showroom.openingHours ?? []).map((slot) => ({
+      '@type': 'OpeningHoursSpecification',
+      'dayOfWeek': slot.dayOfWeek,
+      'opens': slot.opens,
+      'closes': slot.closes,
+    })),
     'brand': { '@type': 'Brand', name: 'GPX Motorcycles' },
     'parentOrganization': { '@type': 'Organization', name: dealer.parent.name, url: dealer.parent.url },
     'sameAs': [dealer.parent.url],

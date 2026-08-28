@@ -5,7 +5,7 @@
  * The branch has its own address and direct line, so it carries its own AutoDealer node
  * in the structured data rather than deferring to the Uttara identity.
  */
-import { dealer, showroomBySlug, telLink, whatsappLink } from '~/data/dealer'
+import { dealer, formatHours, showroomBySlug, telLink, whatsappLink } from '~/data/dealer'
 import { bikes } from '~/data/bikes'
 
 const branch = showroomBySlug('mymensingh')!
@@ -59,6 +59,7 @@ useSchemaOrg([
       addressCountry: dealer.address.countryCode,
     },
     'areaServed': branch.areasServed.map((name) => ({ '@type': 'Place', name })),
+    'hasMap': branch.mapsPlaceUrl ?? undefined,
     'brand': { '@type': 'Brand', name: 'GPX Motorcycles' },
     'parentOrganization': { '@type': 'Organization', name: dealer.name, url: useSiteConfig().url },
   }),
@@ -113,7 +114,7 @@ const openFaq = ref<number | null>(0)
     </section>
 
     <section class="container-x py-16 lg:py-24">
-      <div class="grid gap-8 lg:grid-cols-3">
+      <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-4">
         <div class="border border-line bg-card p-8">
           <h2 class="eyebrow mb-4">Address</h2>
           <address class="not-italic text-lg leading-relaxed text-ink">
@@ -121,6 +122,15 @@ const openFaq = ref<number | null>(0)
             {{ branch.area }}<br >
             {{ branch.city }} {{ branch.postalCode }}
           </address>
+          <a
+            v-if="branch.mapsPlaceUrl"
+            :href="branch.mapsPlaceUrl"
+            target="_blank"
+            rel="noopener"
+            class="mt-5 inline-block font-display text-sm uppercase tracking-[0.18em] text-gpx"
+          >
+            Open in Google Maps
+          </a>
         </div>
 
         <div class="border border-line bg-card p-8">
@@ -134,6 +144,17 @@ const openFaq = ref<number | null>(0)
           <p class="mt-3 text-sm leading-relaxed text-muted">
             Direct line to the Mymensingh branch. The Uttara showroom is on
             {{ dealer.contact.phoneDisplay }}.
+          </p>
+        </div>
+
+        <div class="border border-line bg-card p-8">
+          <h2 class="eyebrow mb-4">Opening hours</h2>
+          <ul v-if="branch.openingHours" class="space-y-1 text-sm text-muted">
+            <li v-for="slot in branch.openingHours" :key="slot.days">{{ formatHours(slot) }}</li>
+          </ul>
+          <p v-else class="text-sm leading-relaxed text-muted">
+            Call {{ branch.phoneDisplay }} to check before you travel — this branch has not
+            confirmed its hours for the site yet.
           </p>
         </div>
 
