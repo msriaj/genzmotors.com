@@ -7,9 +7,16 @@ import type Lenis from 'lenis'
 export function useSmoothScroll() {
   let lenis: Lenis | null = null
 
-  onMounted(async () => {
+  onMounted(() => {
     if (prefersReducedMotion()) return
+    // Touch devices scroll smoothly on their own; adding a rAF loop there is pure cost.
+    if (window.matchMedia('(pointer: coarse)').matches) return
+    if (!hasSpareCycles()) return
 
+    whenIdle(() => void init())
+  })
+
+  async function init() {
     const { default: LenisCtor } = await import('lenis')
     const { gsap, ScrollTrigger } = useGsap()
 
@@ -26,13 +33,16 @@ export function useSmoothScroll() {
     gsap.ticker.lagSmoothing(0)
     document.documentElement.classList.add('lenis-active')
 
-    onBeforeUnmount(() => {
+    cleanup = () => {
       gsap.ticker.remove(raf)
       lenis?.destroy()
       lenis = null
       document.documentElement.classList.remove('lenis-active')
-    })
-  })
+    }
+  }
+
+  let cleanup: (() => void) | null = null
+  onBeforeUnmount(() => cleanup?.())
 
   return {
     scrollTo: (target: string | number) => lenis?.scrollTo(target, { offset: -90 }),

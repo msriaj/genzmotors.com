@@ -17,27 +17,73 @@ export function prefersReducedMotion(): boolean {
   return import.meta.client && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-/** Cheap WebGL capability probe, cached for the session. */
+/**
+ * WebGL capability probe, cached for the session.
+ *
+ * "Has a context" is not enough. Headless Chrome, VMs and machines without a usable GPU
+ * fall back to a software rasteriser (SwiftShader, llvmpipe), where a full-screen shader
+ * is rendered pixel by pixel on the CPU and eats the main thread. Those clients get the
+ * static fallback instead.
+ */
 let webglSupport: boolean | null = null
 export function supportsWebGL(): boolean {
   if (!import.meta.client) return false
   if (webglSupport !== null) return webglSupport
+
   try {
     const canvas = document.createElement('canvas')
-    webglSupport = Boolean(
-      canvas.getContext('webgl2') ||
-        canvas.getContext('webgl') ||
-        canvas.getContext('experimental-webgl'),
-    )
+    const gl = (canvas.getContext('webgl2') ||
+      canvas.getContext('webgl')) as WebGLRenderingContext | null
+
+    if (!gl) {
+      webglSupport = false
+      return false
+    }
+
+    const info = gl.getExtension('WEBGL_debug_renderer_info')
+    const renderer = info
+      ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL) ?? '')
+      : String(gl.getParameter(gl.RENDERER) ?? '')
+
+    webglSupport = !/swiftshader|llvmpipe|software|basic render|angle \(software/i.test(renderer)
+    gl.getExtension('WEBGL_lose_context')?.loseContext()
   } catch {
     webglSupport = false
   }
   return webglSupport
 }
 
-/** Heavy effects are skipped entirely on reduced-motion or non-WebGL clients. */
+/** Rough "can this machine afford a shader running every frame?" check. */
+export function hasSpareCycles(): boolean {
+  if (!import.meta.client) return false
+  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } }
+  if (nav.connection?.saveData) return false
+  if ((nav.deviceMemory ?? 8) < 4) return false
+  if ((navigator.hardwareConcurrency ?? 8) < 4) return false
+  return true
+}
+
+/** Heavy effects are skipped entirely on reduced-motion, weak or non-WebGL clients. */
 export function canRenderWebGL(): boolean {
-  return supportsWebGL() && !prefersReducedMotion()
+  return supportsWebGL() && hasSpareCycles() && !prefersReducedMotion()
+}
+
+/**
+ * Defers work until the page has loaded and the main thread is idle, so an effect can
+ * never compete with first paint or push out the largest contentful paint.
+ */
+export function whenIdle(run: () => void, timeout = 2500) {
+  if (!import.meta.client) return
+
+  const schedule = () => {
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void })
+      .requestIdleCallback
+    if (ric) ric(() => run(), { timeout })
+    else setTimeout(run, 200)
+  }
+
+  if (document.readyState === 'complete') schedule()
+  else window.addEventListener('load', schedule, { once: true })
 }
 
 export interface RevealOptions {

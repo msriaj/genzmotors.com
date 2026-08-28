@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   future: { compatibilityVersion: 4 },
 
-  modules: ['@nuxt/image', '@nuxtjs/seo'],
+  modules: ['@nuxt/fonts', '@nuxt/image', '@nuxtjs/seo'],
 
   css: ['~/assets/css/main.css'],
   vite: { plugins: [tailwindcss()] },
@@ -109,12 +109,6 @@ export default defineNuxtConfig({
       titleTemplate: '%s',
       link: [
         { rel: 'icon', type: 'image/png', href: '/favicon.png' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap',
-        },
       ],
       meta: [
         { name: 'theme-color', content: '#000000' },
@@ -124,6 +118,14 @@ export default defineNuxtConfig({
       ],
     },
     pageTransition: { name: 'page', mode: 'out-in' },
+  },
+
+  fonts: {
+    families: [
+      { name: 'Barlow Condensed', provider: 'google', weights: [500, 600, 700] },
+      { name: 'Inter', provider: 'google', weights: [400, 500, 600] },
+    ],
+    defaults: { subsets: ['latin'] },
   },
 
   typescript: { strict: true },

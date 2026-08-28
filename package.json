@@ -12,6 +12,7 @@
     "build:server": "nuxt build"
   },
   "dependencies": {
+    "@nuxt/fonts": "^0.14.0",
     "@nuxt/image": "^2.1.0",
     "@nuxtjs/seo": "^5.3.14",
     "@takumi-rs/core": "^2.12.0",

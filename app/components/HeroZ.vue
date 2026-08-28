@@ -153,8 +153,8 @@ const FRAGMENT = /* glsl */ `
   }
 `
 
-onMounted(async () => {
-  if (!canRenderWebGL() || !canvas.value) return
+async function start() {
+  if (!canvas.value) return
 
   const el = canvas.value
   const renderer = new THREE.WebGLRenderer({
@@ -169,11 +169,13 @@ onMounted(async () => {
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 20)
   camera.position.set(0, 0, 3.1)
 
-  const { positions, aspect } = await sampleZ(PARTICLES)
+  // Fewer points on smaller screens: the mark is physically smaller there.
+  const count = window.innerWidth < 1400 ? Math.round(PARTICLES * 0.6) : PARTICLES
+  const { positions, aspect } = await sampleZ(count)
 
-  const scatter = new Float32Array(PARTICLES * 3)
-  const seeds = new Float32Array(PARTICLES)
-  for (let i = 0; i < PARTICLES; i++) {
+  const scatter = new Float32Array(count * 3)
+  const seeds = new Float32Array(count)
+  for (let i = 0; i < count; i++) {
     // Dispersal is a spherical shell, not a slab: a box-shaped cloud reads as a rectangle
     // the moment the mark breaks apart. Cube-rooting the radius keeps density even.
     const theta = Math.random() * Math.PI * 2
@@ -313,6 +315,11 @@ onMounted(async () => {
     material.dispose()
     renderer.dispose()
   }
+}
+
+onMounted(() => {
+  if (!canRenderWebGL()) return
+  whenIdle(() => void start())
 })
 
 onBeforeUnmount(() => cleanup?.())

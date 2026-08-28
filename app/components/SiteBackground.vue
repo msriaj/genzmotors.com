@@ -42,10 +42,11 @@ const FRAGMENT = /* glsl */ `
     );
   }
 
+  // Three octaves is enough for a soft haze and costs 40% of five.
   float fbm(vec2 p) {
     float v = 0.0;
     float a = 0.5;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 3; i++) {
       v += a * noise(p);
       p *= 2.03;
       a *= 0.5;
@@ -65,10 +66,6 @@ const FRAGMENT = /* glsl */ `
     haze = pow(haze, 2.1);
     col += vec3(0.62, 0.03, 0.08) * haze * 0.42;
 
-    // A second, tighter layer keeps the field from looking like flat fog.
-    float wisps = fbm(q * 3.1 + vec2(0.0, uTime * 0.05));
-    col += vec3(0.42, 0.02, 0.06) * pow(wisps, 3.0) * 0.5;
-
     // Pointer bloom: a soft warm light the cursor carries.
     float d = length(p - (uMouse - 0.5) * vec2(aspect, 1.0));
     col += vec3(0.85, 0.12, 0.16) * exp(-d * 3.4) * 0.16;
@@ -83,11 +80,6 @@ const FRAGMENT = /* glsl */ `
       col += vec3(0.5, 0.03, 0.07) * line * smoothstep(0.0, 0.2, depth) * 0.42;
     }
 
-    // Dust: a sparse field of points that parallax against the scroll.
-    vec2 dust = vUv * vec2(aspect, 1.0) * 34.0 + vec2(0.0, uScroll * 9.0);
-    float grains = step(0.9975, hash(floor(dust)));
-    col += vec3(0.7, 0.6, 0.62) * grains * 0.5;
-
     // Vignette and film grain.
     float vig = 1.0 - smoothstep(0.5, 1.35, length(vUv - 0.5) * 1.55);
     col *= mix(0.5, 1.0, vig);
@@ -97,14 +89,17 @@ const FRAGMENT = /* glsl */ `
   }
 `
 
-onMounted(async () => {
-  if (!canRenderWebGL() || !canvas.value) return
+async function start() {
+  if (!canvas.value) return
 
   const THREE = (await import('three')) as typeof THREE_NS
   const el = canvas.value
 
   const renderer = new THREE.WebGLRenderer({ canvas: el, antialias: false, alpha: false })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6))
+  // Half resolution, upscaled by CSS. The field is soft enough that nobody can tell,
+  // and it quarters the fragment work.
+  const RESOLUTION_SCALE = 0.5
+  renderer.setPixelRatio(1)
 
   const scene = new THREE.Scene()
   const camera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0, 1)
@@ -135,8 +130,8 @@ onMounted(async () => {
   )
 
   function resize() {
-    const w = window.innerWidth
-    const h = window.innerHeight
+    const w = Math.round(window.innerWidth * RESOLUTION_SCALE)
+    const h = Math.round(window.innerHeight * RESOLUTION_SCALE)
     renderer.setSize(w, h, false)
     ;(uniforms.uResolution!.value as THREE_NS.Vector2).set(w, h)
   }
@@ -161,10 +156,13 @@ onMounted(async () => {
   const clock = new THREE.Clock()
   let frame = 0
   let running = true
+  let lastDraw = 0
+  const FRAME_MS = 1000 / 30
 
-  function loop() {
+  function loop(now = 0) {
     frame = requestAnimationFrame(loop)
-    if (!running) return
+    if (!running || now - lastDraw < FRAME_MS) return
+    lastDraw = now
 
     mouse.x += (mouse.tx - mouse.x) * 0.04
     mouse.y += (mouse.ty - mouse.y) * 0.04
@@ -196,6 +194,12 @@ onMounted(async () => {
     document.removeEventListener('visibilitychange', onVisibility)
     renderer.dispose()
   }
+}
+
+onMounted(() => {
+  if (!canRenderWebGL()) return
+  // Never compete with first paint: the field fades in after load, on an idle frame.
+  whenIdle(() => void start())
 })
 
 onBeforeUnmount(() => cleanup?.())
