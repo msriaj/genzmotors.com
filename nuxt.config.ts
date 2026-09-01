@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   future: { compatibilityVersion: 4 },
 
-  modules: ['@nuxt/fonts', '@nuxt/image', '@nuxtjs/seo'],
+  modules: ['@nuxt/fonts', '@nuxt/image', '@nuxtjs/seo', '@vercel/analytics'],
 
   css: ['~/assets/css/main.css'],
   vite: {
